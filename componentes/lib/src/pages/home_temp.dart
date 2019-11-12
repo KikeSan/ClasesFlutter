@@ -15,7 +15,7 @@ class HomePageTemp extends StatelessWidget {
             children: _crearItemsCorta()));
   }
 
-  List<Widget> _crearItems() {
+  /* List<Widget> _crearItems() {
     List<Widget> lista = new List<Widget>();
 
     for (String opt in opciones) {
@@ -26,7 +26,7 @@ class HomePageTemp extends StatelessWidget {
     }
 
     return lista;
-  }
+  } */
 
   List<Widget> _crearItemsCorta() {
     return opciones.map((item) {
