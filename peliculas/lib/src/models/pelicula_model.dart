@@ -62,4 +62,12 @@ class Pelicula {
     overview = json['overview'];
     releaseDate = json['release_date'];
   }
+
+  getPosterImg() {
+    if (posterPath == null) {
+      return 'https://dakotamoda.es/wp-content/themes/gecko/assets/images/placeholder.png';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$posterPath';
+    }
+  }
 }
