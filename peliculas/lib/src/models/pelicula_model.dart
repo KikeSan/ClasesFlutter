@@ -71,7 +71,7 @@ class Pelicula {
     }
   }
 
-  getPopularImg() {
+  getBackgroundImg() {
     if (backdropPath == null) {
       return 'https://dakotamoda.es/wp-content/themes/gecko/assets/images/placeholder.png';
     } else {
