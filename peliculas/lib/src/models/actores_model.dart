@@ -32,21 +32,21 @@ class Actor {
   });
 
   Actor.fromJsonMap(Map<String, dynamic> json) {
-    castId = json['castId'];
+    castId = json['cast_id'];
     character = json['character'];
-    creditId = json['creditId'];
+    creditId = json['credit_id'];
     gender = json['gender'];
     id = json['id'];
     name = json['name'];
     order = json['order'];
-    profilePath = json['profilePath'];
+    profilePath = json['profile_path'];
+  }
 
-    getFoto() {
-      if (profilePath == null) {
-        return 'https://dakotamoda.es/wp-content/themes/gecko/assets/images/placeholder.png';
-      } else {
-        return 'https://image.tmdb.org/t/p/w500/$profilePath';
-      }
+  getFoto() {
+    if (profilePath == null) {
+      return 'https://dakotamoda.es/wp-content/themes/gecko/assets/images/placeholder.png';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$profilePath';
     }
   }
 }
