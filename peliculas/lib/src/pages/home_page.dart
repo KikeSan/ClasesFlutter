@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
           return CardSwiper(peliculas: snapshot.data);
         } else {
           return Container(
-              height: 400.0, child: Center(child: CircularProgressIndicator()));
+              height: 300.0, child: Center(child: CircularProgressIndicator()));
         }
       },
     );
@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(left: 20.0),
+            padding: EdgeInsets.only(left: 20.0, bottom: 10.0),
             child: Text(
               'Populares',
               style: Theme.of(context).textTheme.subhead,
@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
                 );
               } else {
                 return Container(
-                    height: 200.0,
+                    height: 180.0,
                     child: Center(child: CircularProgressIndicator()));
               }
             },
