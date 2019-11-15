@@ -77,7 +77,7 @@ class Pelicula {
     if (backdropPath == null) {
       return 'https://dakotamoda.es/wp-content/themes/gecko/assets/images/placeholder.png';
     } else {
-      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+      return 'https://image.tmdb.org/t/p/w500$backdropPath';
     }
   }
 }
