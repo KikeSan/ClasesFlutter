@@ -14,6 +14,8 @@ class Peliculas {
 }
 
 class Pelicula {
+  String uniqueId; //creado para evitar conflicto en hero
+
   double popularity;
   int voteCount;
   bool video;
