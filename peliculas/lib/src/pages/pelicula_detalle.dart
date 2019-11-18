@@ -17,8 +17,7 @@ class PeliculaDetalle extends StatelessWidget {
             SizedBox(height: 10.0),
             _posterTitulo(context, pelicula),
             _descripcion(pelicula),
-            _descripcion(pelicula),
-            _crearCasting(pelicula)
+            _crearCasting(context, pelicula)
           ]),
         )
       ],
@@ -105,13 +104,13 @@ class PeliculaDetalle extends StatelessWidget {
     );
   }
 
-  Widget _crearCasting(Pelicula pelicula) {
+  Widget _crearCasting(BuildContext context, Pelicula pelicula) {
     final peliProvider = new PeliculasProvider();
     return FutureBuilder(
       future: peliProvider.getCast(pelicula.id.toString()),
       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
         if (snapshot.hasData) {
-          return _crearActoresPageView(snapshot.data);
+          return _crearActoresPageView(context, snapshot.data);
         } else {
           return Center(
             child: CircularProgressIndicator(),
@@ -121,20 +120,62 @@ class PeliculaDetalle extends StatelessWidget {
     );
   }
 
-  Widget _crearActoresPageView(List<Actor> actores) {
+  Widget _crearActoresPageView(BuildContext context, List<Actor> actores) {
     return SizedBox(
-      height: 200.0,
+      height: 250.0,
       child: PageView.builder(
         pageSnapping: false,
         controller: PageController(viewportFraction: 0.3, initialPage: 1),
         itemCount: actores.length,
-        itemBuilder: (context, i) => _actorTarjeta(actores[i]),
+        itemBuilder: (context, i) => _actorTarjeta(context, actores[i]),
       ),
     );
   }
 
-  Widget _actorTarjeta(Actor actor) {
-    return Container(
+  Widget _actorTarjeta(BuildContext context, Actor actor) {
+    final tarjeta = Container(
+      child: Column(
+        children: <Widget>[
+          Hero(
+            tag: actor.name,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: FadeInImage(
+                image: NetworkImage(actor.getFoto()),
+                placeholder: AssetImage('assets/img/no-image.jpg'),
+                height: 150.0,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 5.0,
+          ),
+          Text(
+            actor.name,
+            //overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 13.0),
+          ),
+          SizedBox(
+            height: 2.0,
+          ),
+          Text(
+            actor.character,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.blueGrey, fontSize: 12.0),
+          )
+        ],
+      ),
+    );
+
+    return GestureDetector(
+      child: tarjeta,
+      onTap: () {
+        Navigator.pushNamed(context, 'detalleFoto', arguments: actor);
+      },
+    );
+    /* return Container(
       child: Column(
         children: <Widget>[
           ClipRRect(
@@ -146,12 +187,25 @@ class PeliculaDetalle extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
+          SizedBox(
+            height: 5.0,
+          ),
           Text(
             actor.name,
-            overflow: TextOverflow.ellipsis,
+            //overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 13.0),
+          ),
+          SizedBox(
+            height: 2.0,
+          ),
+          Text(
+            actor.character,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.blueGrey, fontSize: 12.0),
           )
         ],
       ),
-    );
+    ); */
   }
 }
