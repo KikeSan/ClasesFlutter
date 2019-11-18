@@ -72,12 +72,12 @@ class PeliculaDetalle extends StatelessWidget {
                 Text(
                   pelicula.title,
                   style: Theme.of(context).textTheme.title,
-                  overflow: TextOverflow.ellipsis,
+                  //overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   pelicula.originalTitle,
                   style: Theme.of(context).textTheme.subhead,
-                  overflow: TextOverflow.ellipsis,
+                  //overflow: TextOverflow.ellipsis,
                 ),
                 Row(
                   children: <Widget>[

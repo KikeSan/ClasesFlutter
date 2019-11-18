@@ -22,7 +22,7 @@ class MovieHorizontal extends StatelessWidget {
     });
 
     return Container(
-      height: _screenSize.height * 0.23,
+      height: _screenSize.height * 0.24,
       child: PageView.builder(
         pageSnapping: false,
         controller: _pageController,
@@ -51,7 +51,7 @@ class MovieHorizontal extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 8.0,
+            height: 7.0,
           ),
           Text(
             pelicula.title,
