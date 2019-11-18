@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
         ),
         body: Container(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               _swiperTarjetas(),
               _footer(context),
@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(left: 20.0, bottom: 10.0),
+            padding: EdgeInsets.only(left: 20.0, bottom: 5.0),
             child: Text(
               'Populares',
               style: Theme.of(context).textTheme.subhead,
