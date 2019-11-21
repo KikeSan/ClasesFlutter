@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/actorBio_model.dart';
 import 'package:peliculas/src/models/actores_model.dart';
 import 'package:peliculas/src/models/actuaEn_model.dart';
 import 'package:peliculas/src/models/pelicula_model.dart';
@@ -7,12 +8,13 @@ import 'package:peliculas/src/providers/peliculas_provider.dart';
 class ActorFoto extends StatelessWidget {
   final Pelicula pelicula;
 
-  ActorFoto({@required this.pelicula});
+  ActorFoto({this.pelicula});
 
   @override
   Widget build(BuildContext context) {
     final Actor actor = ModalRoute.of(context).settings.arguments;
-    print(actor.name);
+    final peliProvider = new PeliculasProvider();
+    print('Biography');
     return Scaffold(
       body: Center(
         child: Column(
@@ -32,6 +34,18 @@ class ActorFoto extends StatelessWidget {
             Text(actor.name,
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
             SizedBox(height: 25.0),
+            /* FutureBuilder(
+              future: peliProvider.getBiography(actor.id.toString()),
+              builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                if (snapshot.hasData) {
+                  return _crearBiografia(context, snapshot.data);
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ), */
             /* Text(
               actor.character,
               style: TextStyle(color: Colors.blueGrey, fontSize: 16.0),
@@ -40,6 +54,13 @@ class ActorFoto extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _crearBiografia(BuildContext context, List<ActorBiography> actor) {
+    print('actor--->$actor.name');
+    return Column(
+      children: <Widget>[Text(actor.toString())],
     );
   }
 
@@ -75,11 +96,13 @@ class ActorFoto extends StatelessWidget {
   }
 
   Widget _peliTarjeta(BuildContext context, ActuaEn actuaEn) {
+    actuaEn.uniqueId = '${actuaEn.id}-poster';
     final tarjeta = Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Hero(
-            tag: actuaEn.title,
+            tag: actuaEn.uniqueId,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(7.0),
               child: FadeInImage(
@@ -106,7 +129,7 @@ class ActorFoto extends StatelessWidget {
     return GestureDetector(
       child: tarjeta,
       onTap: () {
-        Navigator.pushNamed(context, 'detalle', arguments: pelicula);
+        Navigator.pushNamed(context, 'detalle', arguments: actuaEn);
       },
     );
   }
