@@ -7,7 +7,8 @@ class PeliculaDetalle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Pelicula pelicula = ModalRoute.of(context).settings.arguments;
-
+    print('peliculaDetalle');
+    print(pelicula.title);
     return Scaffold(
         body: CustomScrollView(
       slivers: <Widget>[
@@ -85,7 +86,17 @@ class PeliculaDetalle extends StatelessWidget {
                     Text(pelicula.voteAverage.toString(),
                         style: Theme.of(context).textTheme.subhead),
                   ],
-                )
+                ),
+                Row(
+                  children: <Widget>[
+                    Icon(Icons.movie_filter, size: 18.0),
+                    Text(pelicula.releaseDate,
+                        style: TextStyle(fontSize: 14.0)),
+                  ],
+                ),
+                /* SizedBox(height: 5.0),
+                Text(pelicula.releaseDate,
+                    style: TextStyle(color: Colors.blueGrey, fontSize: 14.0)) */
               ],
             ),
           )
