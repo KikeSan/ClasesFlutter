@@ -19,7 +19,7 @@ class FotosSwiper extends StatelessWidget {
         itemHeight: _screenSize.height * 0.69,
         itemBuilder: (BuildContext context, int index) {
           return ClipRRect(
-              borderRadius: BorderRadius.circular(16.0),
+              borderRadius: BorderRadius.circular(14.0),
               child: GestureDetector(
                 onTap: () => Navigator.pushNamed(context, 'detalle',
                     arguments: fotos[index]),

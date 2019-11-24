@@ -9,12 +9,13 @@ class ActorFoto extends StatelessWidget {
   final Pelicula pelicula;
   final peliculasProvider = new PeliculasProvider();
 
-  ActorFoto({@required this.pelicula});
+  ActorFoto({this.pelicula});
 
   @override
   Widget build(BuildContext context) {
     final Actor actor = ModalRoute.of(context).settings.arguments;
-    print(actor.name);
+    //final peliProvider = new PeliculasProvider();
+    print('Biography');
     return Scaffold(
       body: Center(
         child: Column(
@@ -94,11 +95,13 @@ class ActorFoto extends StatelessWidget {
   }
 
   Widget _peliTarjeta(BuildContext context, ActuaEn actuaEn) {
+    actuaEn.uniqueId = '${actuaEn.id}-poster';
     final tarjeta = Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Hero(
-            tag: actuaEn.title,
+            tag: actuaEn.uniqueId,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(7.0),
               child: FadeInImage(
@@ -125,7 +128,7 @@ class ActorFoto extends StatelessWidget {
     return GestureDetector(
       child: tarjeta,
       onTap: () {
-        Navigator.pushNamed(context, 'detalle', arguments: pelicula);
+        Navigator.pushNamed(context, 'detalle', arguments: actuaEn);
       },
     );
   }
