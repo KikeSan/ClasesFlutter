@@ -10,8 +10,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Este codigo comentado sirve para poner el texto blanco del status bar del iphone, donde sale el indicador de bateria arriba
-    /* SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.white)); */
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
+        .copyWith(statusBarColor: Colors.transparent));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Diseños',
