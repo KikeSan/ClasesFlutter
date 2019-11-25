@@ -46,7 +46,7 @@ class ScrollPage extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: <Widget>[
-          SizedBox(height: 20.0),
+          SizedBox(height: 80.0),
           Text('11°', style: estiloTexto),
           Text('Miércoles', style: estiloTexto),
           Expanded(
@@ -59,8 +59,25 @@ class ScrollPage extends StatelessWidget {
   }
 
   Widget _pagina2() {
-    return Center(
-      child: Text('Página 222'),
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: Color.fromRGBO(108, 192, 218, 1.0),
+      child: Center(
+        child: RaisedButton(
+          shape: StadiumBorder(),
+          color: Colors.blue,
+          textColor: Colors.white,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+            child: Text(
+              'Bienvenido',
+              style: TextStyle(fontSize: 20.0),
+            ),
+          ),
+          onPressed: () {},
+        ),
+      ),
     );
   }
 }
