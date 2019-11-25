@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/actorBio_model.dart';
 import 'package:peliculas/src/models/actores_model.dart';
 import 'package:peliculas/src/models/actuaEn_model.dart';
 import 'package:peliculas/src/models/pelicula_model.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
+import 'package:peliculas/src/widgets/fotos_swiper_widget.dart';
 
 class ActorFoto extends StatelessWidget {
   final Pelicula pelicula;
+  final peliculasProvider = new PeliculasProvider();
 
   ActorFoto({this.pelicula});
 
   @override
   Widget build(BuildContext context) {
     final Actor actor = ModalRoute.of(context).settings.arguments;
-    final peliProvider = new PeliculasProvider();
+    //final peliProvider = new PeliculasProvider();
     print('Biography');
     return Scaffold(
       body: Center(
         child: Column(
           children: <Widget>[
-            Hero(
+            /* Hero(
               tag: actor.name,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
@@ -29,23 +30,13 @@ class ActorFoto extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-            ),
+            ), */
+            SizedBox(height: 40.0),
+            _swiperTarjetas(actor),
             SizedBox(height: 15.0),
             Text(actor.name,
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-            SizedBox(height: 25.0),
-            /* FutureBuilder(
-              future: peliProvider.getBiography(actor.id.toString()),
-              builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-                if (snapshot.hasData) {
-                  return _crearBiografia(context, snapshot.data);
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-            ), */
+            SizedBox(height: 20.0),
             /* Text(
               actor.character,
               style: TextStyle(color: Colors.blueGrey, fontSize: 16.0),
@@ -57,11 +48,19 @@ class ActorFoto extends StatelessWidget {
     );
   }
 
-  Widget _crearBiografia(BuildContext context, List<ActorBiography> actor) {
-    print('actor--->$actor.name');
-    return Column(
-      children: <Widget>[Text(actor.toString())],
+  Widget _swiperTarjetas(Actor actor) {
+    return FutureBuilder(
+      future: peliculasProvider.getFotosPerfil(actor.id.toString()),
+      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+        if (snapshot.hasData) {
+          return FotosSwiper(fotos: snapshot.data);
+        } else {
+          return Container(
+              height: 600.0, child: Center(child: CircularProgressIndicator()));
+        }
+      },
     );
+    //return CardSwiper(peliculas: [1, 2, 3, 4, 5]);
   }
 
   Widget _tambienActuaEn(BuildContext context, Actor actor) {

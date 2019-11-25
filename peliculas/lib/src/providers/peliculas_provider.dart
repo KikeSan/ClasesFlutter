@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:peliculas/src/models/actorBio_model.dart';
 import 'package:peliculas/src/models/actores_model.dart';
 import 'package:peliculas/src/models/actuaEn_model.dart';
+import 'package:peliculas/src/models/fotosActor_model.dart';
 import 'package:peliculas/src/models/pelicula_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -103,6 +104,17 @@ class PeliculasProvider {
     final decodedData = json.decode(resp.body);
     final actuaEnPeli = new ActuaEnPeli.fromJsonList(decodedData['cast']);
     return actuaEnPeli.actuaEn;
+  }
+
+  Future<List<Fotos>> getFotosPerfil(String actorId) async {
+    final url = Uri.https(_url, '3/person/$actorId/images', {
+      'api_key': _apikey,
+    });
+
+    final resp = await http.get(url);
+    final decodedData = json.decode(resp.body);
+    final fotosPerfil = new FotosActor.fromJsonList(decodedData['profiles']);
+    return fotosPerfil.fotos;
   }
 
   Future<List<Pelicula>> buscarPelicula(String query) async {
