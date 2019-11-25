@@ -18,11 +18,7 @@ class HomePage extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
-                showSearch(
-                  context: context,
-                  delegate: DataSearch(),
-                  /* query: 'Hola' */
-                );
+                showSearch(context: context, delegate: DataSearch());
               },
             )
           ],
