@@ -1,3 +1,5 @@
+import 'dart:math';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/actores_model.dart';
 import 'package:peliculas/src/models/pelicula_model.dart';
@@ -10,34 +12,79 @@ class PeliculaDetalle extends StatelessWidget {
     print('peliculaDetalle');
     print(pelicula.title);
     return Scaffold(
-        body: CustomScrollView(
-      slivers: <Widget>[
-        _crearAppBar(pelicula),
-        SliverList(
-          delegate: SliverChildListDelegate([
-            SizedBox(height: 10.0),
-            _posterTitulo(context, pelicula),
-            _descripcion(pelicula),
-            _crearCasting(context, pelicula)
-          ]),
+        body: Stack(
+      children: [
+        _fondoApp(),
+        CustomScrollView(
+          slivers: <Widget>[
+            _crearAppBar(pelicula),
+            SliverList(
+              delegate: SliverChildListDelegate([
+                SizedBox(height: 10.0),
+                _posterTitulo(context, pelicula),
+                _descripcion(pelicula),
+                _crearCasting(context, pelicula)
+              ]),
+            )
+          ],
         )
       ],
     ));
   }
 
+  Widget _fondoApp() {
+    final gradiente = Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: FractionalOffset(0.0, 0.2),
+              end: FractionalOffset(0.0, 1.0),
+              colors: [
+            Color.fromRGBO(40, 16, 66, 1.0),
+            Color.fromRGBO(19, 0, 29, 1.0)
+          ])),
+    );
+
+    final cajaRosa = Transform.rotate(
+      angle: -pi / 4.0,
+      child: Container(
+        height: 460.0,
+        width: 460.0,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(80.0),
+            gradient: LinearGradient(colors: [
+              Color.fromRGBO(236, 98, 188, 0.1),
+              Color.fromRGBO(241, 142, 172, 0.15),
+            ])),
+      ),
+    );
+
+    return Stack(
+      children: <Widget>[
+        gradiente,
+        Positioned(
+          top: 80.0,
+          right: -130.0,
+          child: cajaRosa,
+        ),
+      ],
+    );
+  }
+
   Widget _crearAppBar(Pelicula pelicula) {
     return SliverAppBar(
       elevation: 2.0,
-      backgroundColor: Colors.indigoAccent,
-      expandedHeight: 200.0,
+      backgroundColor: Colors.transparent,
+      expandedHeight: 240.0,
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
-        title: Text(
-          pelicula.title,
-          style: TextStyle(color: Colors.white, fontSize: 16.0),
-        ),
+        title: Text(''
+            /* pelicula.title,
+          style: TextStyle(color: Colors.purple[300], fontSize: 16.0), */
+            ),
         background: FadeInImage(
           image: NetworkImage(pelicula.getBackgroundImg()),
           placeholder: AssetImage('assets/img/loading.gif'),
@@ -50,7 +97,7 @@ class PeliculaDetalle extends StatelessWidget {
 
   Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
       child: Row(
         children: <Widget>[
           Hero(
@@ -72,26 +119,42 @@ class PeliculaDetalle extends StatelessWidget {
               children: <Widget>[
                 Text(
                   pelicula.title,
-                  style: Theme.of(context).textTheme.title,
+                  style: TextStyle(color: Colors.purple[100], fontSize: 20.0),
                   //overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   pelicula.originalTitle,
-                  style: Theme.of(context).textTheme.subhead,
+                  style: TextStyle(color: Colors.purple[300], fontSize: 16.0),
                   //overflow: TextOverflow.ellipsis,
                 ),
                 Row(
                   children: <Widget>[
-                    Icon(Icons.star_border),
+                    Icon(
+                      Icons.star_border,
+                      size: 18.0,
+                      color: Colors.lime,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
                     Text(pelicula.voteAverage.toString(),
-                        style: Theme.of(context).textTheme.subhead),
+                        style: TextStyle(
+                            color: Colors.purple[200], fontSize: 16.0)),
                   ],
                 ),
                 Row(
                   children: <Widget>[
-                    Icon(Icons.movie_filter, size: 18.0),
+                    Icon(
+                      Icons.movie_filter,
+                      size: 18.0,
+                      color: Colors.lime,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
                     Text(pelicula.releaseDate,
-                        style: TextStyle(fontSize: 14.0)),
+                        style: TextStyle(
+                            fontSize: 14.0, color: Colors.purple[200])),
                   ],
                 ),
                 /* SizedBox(height: 5.0),
@@ -107,10 +170,12 @@ class PeliculaDetalle extends StatelessWidget {
 
   Widget _descripcion(Pelicula pelicula) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+      padding:
+          EdgeInsets.only(top: 10.0, right: 20.0, bottom: 40.0, left: 20.0),
       child: Text(
         pelicula.overview,
         textAlign: TextAlign.justify,
+        style: TextStyle(color: Colors.purple[100]),
       ),
     );
   }
@@ -166,7 +231,7 @@ class PeliculaDetalle extends StatelessWidget {
             actor.name,
             //overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13.0),
+            style: TextStyle(fontSize: 13.0, color: Colors.purple[100]),
           ),
           SizedBox(
             height: 2.0,
@@ -174,7 +239,7 @@ class PeliculaDetalle extends StatelessWidget {
           Text(
             actor.character,
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.blueGrey, fontSize: 12.0),
+            style: TextStyle(color: Colors.purple[800], fontSize: 12.0),
           )
         ],
       ),
