@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
     //https://kike.pe
     //geo:-12.131040009349876,-77.02965453108675
     String futureString = '';
-    try {
+    /* try {
       futureString = await new QRCodeReader().scan();
     } catch (e) {
       futureString = e.toString();
@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
     print('futureString: $futureString');
     if (futureString != null) {
       print('Tenemos info!');
-    }
+    } */
   }
 
   Widget _callPage(int paginaActual) {
