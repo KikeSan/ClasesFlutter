@@ -1,3 +1,5 @@
+import 'dart:math';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/actores_model.dart';
 import 'package:peliculas/src/models/actuaEn_model.dart';
@@ -17,34 +19,82 @@ class ActorFoto extends StatelessWidget {
     //final peliProvider = new PeliculasProvider();
     print('Biography');
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            /* Hero(
-              tag: actor.name,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: FadeInImage(
-                  image: NetworkImage(actor.getFoto()),
-                  placeholder: AssetImage('assets/img/no-image.jpg'),
-                  fit: BoxFit.cover,
+      body: Stack(
+        children: <Widget>[
+          _fondoApp(),
+          Center(
+            child: Column(
+              children: <Widget>[
+                /* Hero(
+                tag: actor.name,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: FadeInImage(
+                    image: NetworkImage(actor.getFoto()),
+                    placeholder: AssetImage('assets/img/no-image.jpg'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-            ), */
-            SizedBox(height: 40.0),
-            _swiperTarjetas(actor),
-            SizedBox(height: 15.0),
-            Text(actor.name,
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-            SizedBox(height: 20.0),
-            /* Text(
-              actor.character,
-              style: TextStyle(color: Colors.blueGrey, fontSize: 16.0),
-            ), */
-            _tambienActuaEn(context, actor)
-          ],
-        ),
+              ), */
+                SizedBox(height: 40.0),
+                _swiperTarjetas(actor),
+                SizedBox(height: 15.0),
+                Text(actor.name,
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.purple[200])),
+                SizedBox(height: 20.0),
+                /* Text(
+                actor.character,
+                style: TextStyle(color: Colors.blueGrey, fontSize: 16.0),
+              ), */
+                _tambienActuaEn(context, actor)
+              ],
+            ),
+          )
+        ],
       ),
+    );
+  }
+
+  Widget _fondoApp() {
+    final gradiente = Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: FractionalOffset(0.0, 0.2),
+              end: FractionalOffset(0.0, 1.0),
+              colors: [
+            Color.fromRGBO(40, 16, 66, 1.0),
+            Color.fromRGBO(19, 0, 29, 1.0)
+          ])),
+    );
+
+    final cajaRosa = Transform.rotate(
+      angle: -pi / 4.0,
+      child: Container(
+        height: 460.0,
+        width: 460.0,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(80.0),
+            gradient: LinearGradient(colors: [
+              Color.fromRGBO(236, 98, 188, 0.2),
+              Color.fromRGBO(241, 142, 172, 0.2),
+            ])),
+      ),
+    );
+
+    return Stack(
+      children: <Widget>[
+        gradiente,
+        Positioned(
+          top: -60.0,
+          left: -140.0,
+          child: cajaRosa,
+        ),
+      ],
     );
   }
 
@@ -119,7 +169,7 @@ class ActorFoto extends StatelessWidget {
             actuaEn.title,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13.0),
+            style: TextStyle(fontSize: 13.0, color: Colors.purple[100]),
           ),
         ],
       ),

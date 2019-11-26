@@ -1,3 +1,5 @@
+import 'dart:math';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
 import 'package:peliculas/src/search/search_delegate.dart';
@@ -10,10 +12,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     peliculasProvider.getPopulares();
     return Scaffold(
-        appBar: AppBar(
+        /* appBar: AppBar(
           centerTitle: false,
           title: Text('Películas en cines'),
-          backgroundColor: Colors.indigoAccent,
+          backgroundColor: Color.fromRGBO(40, 16, 66, 1.0),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search),
@@ -22,16 +24,89 @@ class HomePage extends StatelessWidget {
               },
             )
           ],
-        ),
-        body: Container(
+        ), */
+        body: Stack(
+      children: <Widget>[
+        _fondoApp(),
+        Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+              _header(context),
               _swiperTarjetas(),
               _footer(context),
             ],
           ),
-        ));
+        ),
+      ],
+    ));
+  }
+
+  Widget _header(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        SizedBox(
+          height: 60.0,
+        ),
+        Text(
+          'Películas en cines',
+          style: TextStyle(
+              fontSize: 28.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.purple[100]),
+        ),
+        SizedBox(width: 60.0),
+        IconButton(
+          icon: Icon(Icons.search),
+          color: Colors.purpleAccent,
+          iconSize: 30.0,
+          onPressed: () {
+            showSearch(context: context, delegate: DataSearch());
+          },
+        )
+      ],
+    );
+  }
+
+  Widget _fondoApp() {
+    final gradiente = Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: FractionalOffset(0.0, 0.2),
+              end: FractionalOffset(0.0, 1.0),
+              colors: [
+            Color.fromRGBO(40, 16, 66, 1.0),
+            Color.fromRGBO(19, 0, 29, 1.0)
+          ])),
+    );
+
+    final cajaRosa = Transform.rotate(
+      angle: -pi / 4.0,
+      child: Container(
+        height: 460.0,
+        width: 460.0,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(80.0),
+            gradient: LinearGradient(colors: [
+              Color.fromRGBO(236, 98, 188, 0.2),
+              Color.fromRGBO(241, 142, 172, 0.2),
+            ])),
+      ),
+    );
+
+    return Stack(
+      children: <Widget>[
+        gradiente,
+        Positioned(
+          top: -60.0,
+          left: -140.0,
+          child: cajaRosa,
+        ),
+      ],
+    );
   }
 
   Widget _swiperTarjetas() {
@@ -42,7 +117,7 @@ class HomePage extends StatelessWidget {
           return CardSwiper(peliculas: snapshot.data);
         } else {
           return Container(
-              height: 300.0, child: Center(child: CircularProgressIndicator()));
+              height: 280.0, child: Center(child: CircularProgressIndicator()));
         }
       },
     );
@@ -59,11 +134,11 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 20.0, bottom: 5.0),
             child: Text(
               'Populares',
-              style: Theme.of(context).textTheme.subhead,
+              style: TextStyle(color: Colors.purpleAccent, fontSize: 26.0),
             ),
           ),
           SizedBox(
-            height: 5.0,
+            height: 15.0,
           ),
           StreamBuilder(
             stream: peliculasProvider.popularesStream,
