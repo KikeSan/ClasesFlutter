@@ -3,6 +3,7 @@ import 'package:qrreaderapp/src/pages/direcciones_page.dart';
 import 'package:qrreaderapp/src/pages/mapas_page.dart';
 
 import 'package:qrcode_reader/qrcode_reader.dart';
+import 'package:qrreaderapp/src/providers/db_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -39,17 +40,18 @@ class _HomePageState extends State<HomePage> {
   _scanQR() async {
     //https://kike.pe
     //geo:-12.131040009349876,-77.02965453108675
-    String futureString = '';
+    String futureString = 'https://kike.pe';
     /* try {
       futureString = await new QRCodeReader().scan();
     } catch (e) {
       futureString = e.toString();
-    }
+    }*/
 
     print('futureString: $futureString');
     if (futureString != null) {
-      print('Tenemos info!');
-    } */
+      final scan = ScanModel(valor: futureString);
+      DBProvider.db.nuevoScan(scan);
+    }
   }
 
   Widget _callPage(int paginaActual) {
