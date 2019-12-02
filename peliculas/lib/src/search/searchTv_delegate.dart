@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/pelicula_model.dart';
+import 'package:peliculas/src/models/serie_model.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
 
-class DataSearch extends SearchDelegate {
+class DataSearchTV extends SearchDelegate {
   String seleccion = '';
   final peliculasProvider = new PeliculasProvider();
 
@@ -64,25 +64,26 @@ class DataSearch extends SearchDelegate {
     }
 
     return FutureBuilder(
-      future: peliculasProvider.buscarPelicula(query),
-      builder: (BuildContext context, AsyncSnapshot<List<Pelicula>> snapshot) {
+      future: peliculasProvider.buscarSerie(query),
+      builder: (BuildContext context, AsyncSnapshot<List<Serie>> snapshot) {
         if (snapshot.hasData) {
-          final peliculas = snapshot.data;
+          final series = snapshot.data;
           return ListView(
-            children: peliculas.map((pelicula) {
+            children: series.map((serie) {
               return ListTile(
                 leading: FadeInImage(
-                  image: NetworkImage(pelicula.getPosterImg()),
+                  image: NetworkImage(serie.getPosterImg()),
                   placeholder: AssetImage('assets/img/no-image.jpg'),
                   width: 50.0,
                   fit: BoxFit.contain,
                 ),
-                title: Text(pelicula.title),
-                subtitle: Text(pelicula.originalTitle),
+                title: Text(serie.name),
+                subtitle: Text(serie.originalName),
                 onTap: () {
                   //close(context, null);
-                  pelicula.uniqueId = '';
-                  Navigator.pushNamed(context, 'detalle', arguments: pelicula);
+                  serie.uniqueId = '';
+                  Navigator.pushNamed(context, 'detalleSerie',
+                      arguments: serie);
                 },
               );
             }).toList(),

@@ -2,28 +2,28 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/actores_model.dart';
-import 'package:peliculas/src/models/pelicula_model.dart';
+import 'package:peliculas/src/models/serie_model.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
 
-class PeliculaDetalle extends StatelessWidget {
+class SerieDetalle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Pelicula pelicula = ModalRoute.of(context).settings.arguments;
+    final Serie serie = ModalRoute.of(context).settings.arguments;
     print('peliculaDetalle');
-    print(pelicula.title);
+    print(serie.name);
     return Scaffold(
         body: Stack(
       children: [
         _fondoApp(),
         CustomScrollView(
           slivers: <Widget>[
-            _crearAppBar(pelicula),
+            _crearAppBar(serie),
             SliverList(
               delegate: SliverChildListDelegate([
                 SizedBox(height: 10.0),
-                _posterTitulo(context, pelicula),
-                _descripcion(pelicula),
-                _crearCasting(context, pelicula)
+                _posterTitulo(context, serie),
+                _descripcion(serie),
+                _crearCasting(context, serie)
               ]),
             )
           ],
@@ -72,7 +72,7 @@ class PeliculaDetalle extends StatelessWidget {
     );
   }
 
-  Widget _crearAppBar(Pelicula pelicula) {
+  Widget _crearAppBar(Serie pelicula) {
     return SliverAppBar(
       elevation: 2.0,
       backgroundColor: Colors.transparent,
@@ -95,7 +95,7 @@ class PeliculaDetalle extends StatelessWidget {
     );
   }
 
-  Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
+  Widget _posterTitulo(BuildContext context, Serie pelicula) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
       child: Row(
@@ -118,12 +118,12 @@ class PeliculaDetalle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  pelicula.title,
+                  pelicula.name,
                   style: TextStyle(color: Colors.blue[50], fontSize: 20.0),
                   //overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  pelicula.originalTitle,
+                  pelicula.originalName,
                   style: TextStyle(color: Colors.blue[300], fontSize: 16.0),
                   //overflow: TextOverflow.ellipsis,
                 ),
@@ -152,7 +152,7 @@ class PeliculaDetalle extends StatelessWidget {
                     SizedBox(
                       width: 5.0,
                     ),
-                    Text(pelicula.releaseDate,
+                    Text(pelicula.firstAirDate,
                         style:
                             TextStyle(fontSize: 14.0, color: Colors.blue[200])),
                   ],
@@ -168,7 +168,7 @@ class PeliculaDetalle extends StatelessWidget {
     );
   }
 
-  Widget _descripcion(Pelicula pelicula) {
+  Widget _descripcion(Serie pelicula) {
     return Container(
       padding:
           EdgeInsets.only(top: 10.0, right: 20.0, bottom: 40.0, left: 20.0),
@@ -180,10 +180,10 @@ class PeliculaDetalle extends StatelessWidget {
     );
   }
 
-  Widget _crearCasting(BuildContext context, Pelicula pelicula) {
+  Widget _crearCasting(BuildContext context, Serie pelicula) {
     final peliProvider = new PeliculasProvider();
     return FutureBuilder(
-      future: peliProvider.getCast(pelicula.id.toString()),
+      future: peliProvider.getCastSeries(pelicula.id.toString()),
       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
         if (snapshot.hasData) {
           return _crearActoresPageView(context, snapshot.data);

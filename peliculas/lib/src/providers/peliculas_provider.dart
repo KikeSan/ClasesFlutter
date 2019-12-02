@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:peliculas/src/models/actorBio_model.dart';
+import 'package:peliculas/src/models/actorBuscado_model.dart';
 import 'package:peliculas/src/models/actores_model.dart';
 import 'package:peliculas/src/models/actuaEn_model.dart';
 import 'package:peliculas/src/models/fotosActor_model.dart';
 import 'package:peliculas/src/models/pelicula_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculas/src/models/serie_model.dart';
 
 class PeliculasProvider {
   String _apikey = '7ee4ac5a82ffbe62669798a4c5e6ff46';
@@ -36,8 +38,26 @@ class PeliculasProvider {
     final decodedData = json.decode(resp.body);
 
     final peliculas = new Peliculas.fromJsonList(decodedData['results']);
-
     return peliculas.items;
+  }
+
+  Future<List<Serie>> _procesaRespuestaSerie(Uri url) async {
+    final resp = await http.get(url);
+    final decodedData = json.decode(resp.body);
+
+    final series = new Series.fromJsonList(decodedData['results']);
+    print('Retorno: $series.items');
+    return series.items;
+  }
+
+  Future<List<ActorBuscado>> _procesaRespuestaActor(Uri url) async {
+    final resp = await http.get(url);
+    final decodedData = json.decode(resp.body);
+    print('Actor $decodedData');
+
+    final actor = new CastBuscado.fromJsonList(decodedData['results']);
+    print('Retorno: $actor.items');
+    return actor.actorBuscado;
   }
 
   Future<List<Pelicula>> getEnCines() async {
@@ -70,6 +90,18 @@ class PeliculasProvider {
 
   Future<List<Actor>> getCast(String peliId) async {
     final url = Uri.https(_url, '3/movie/$peliId/credits', {
+      'api_key': _apikey,
+      'language': _languaje,
+    });
+
+    final resp = await http.get(url);
+    final decodedData = json.decode(resp.body);
+    final cast = new Cast.fromJsonList(decodedData['cast']);
+    return cast.actores;
+  }
+
+  Future<List<Actor>> getCastSeries(String serieId) async {
+    final url = Uri.https(_url, '3/tv/$serieId/credits', {
       'api_key': _apikey,
       'language': _languaje,
     });
@@ -118,9 +150,32 @@ class PeliculasProvider {
   }
 
   Future<List<Pelicula>> buscarPelicula(String query) async {
-    final url = Uri.https(_url, '3/search/movie',
-        {'api_key': _apikey, 'language': _languaje, 'query': query});
+    final url = Uri.https(_url, '3/search/movie', {
+      'api_key': _apikey,
+      'language': _languaje,
+      'query': query,
+      'include_adult': 'true'
+    });
 
     return await _procesaRespuesta(url);
+  }
+
+  Future<List<Serie>> buscarSerie(String query) async {
+    final url = Uri.https(_url, '3/search/tv', {
+      'api_key': _apikey,
+      'language': _languaje,
+      'query': query,
+    });
+    return await _procesaRespuestaSerie(url);
+  }
+
+  Future<List<ActorBuscado>> buscarActor(String query) async {
+    final url = Uri.https(_url, '3/search/person', {
+      'api_key': _apikey,
+      'language': _languaje,
+      'query': query,
+      'include_adult': 'true'
+    });
+    return await _procesaRespuestaActor(url);
   }
 }

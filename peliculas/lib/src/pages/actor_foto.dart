@@ -43,7 +43,7 @@ class ActorFoto extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.purple[200])),
+                        color: Colors.blue[100])),
                 SizedBox(height: 20.0),
                 /* Text(
                 actor.character,
@@ -67,8 +67,8 @@ class ActorFoto extends StatelessWidget {
               begin: FractionalOffset(0.0, 0.2),
               end: FractionalOffset(0.0, 1.0),
               colors: [
-            Color.fromRGBO(40, 16, 66, 1.0),
-            Color.fromRGBO(19, 0, 29, 1.0)
+            Color.fromRGBO(39, 82, 205, 1.0),
+            Color.fromRGBO(11, 13, 73, 1.0)
           ])),
     );
 
@@ -80,8 +80,8 @@ class ActorFoto extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(80.0),
             gradient: LinearGradient(colors: [
-              Color.fromRGBO(236, 98, 188, 0.2),
-              Color.fromRGBO(241, 142, 172, 0.2),
+              Color.fromRGBO(90, 120, 160, 0.7),
+              Color.fromRGBO(49, 175, 255, 0.7),
             ])),
       ),
     );
@@ -91,7 +91,7 @@ class ActorFoto extends StatelessWidget {
         gradiente,
         Positioned(
           top: -60.0,
-          left: -140.0,
+          left: -130.0,
           child: cajaRosa,
         ),
       ],
@@ -169,7 +169,7 @@ class ActorFoto extends StatelessWidget {
             actuaEn.title,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13.0, color: Colors.purple[100]),
+            style: TextStyle(fontSize: 13.0, color: Colors.blue[200]),
           ),
         ],
       ),

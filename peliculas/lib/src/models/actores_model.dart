@@ -11,6 +11,8 @@ class Cast {
 }
 
 class Actor {
+  String uniqueId;
+
   int castId;
   String character;
   String creditId;
