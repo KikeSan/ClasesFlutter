@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:preferenciasusuarioapp/src/pages/home_page.dart';
+import 'package:preferenciasusuarioapp/src/pages/settings_page.dart';
 
 class MenuWidget extends StatelessWidget {
   @override
