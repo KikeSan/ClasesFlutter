@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/src/pages/actor_foto.dart';
 import 'package:peliculas/src/pages/home_page.dart';
 import 'package:peliculas/src/pages/pelicula_detalle.dart';
+import 'package:peliculas/src/pages/pelicula_foto.dart';
 import 'package:peliculas/src/pages/serie_detalle.dart';
+import 'package:peliculas/src/pages/serie_foto.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,6 +20,8 @@ class MyApp extends StatelessWidget {
         'detalle': (BuildContext context) => PeliculaDetalle(),
         'detalleSerie': (BuildContext context) => SerieDetalle(),
         'detalleFoto': (BuildContext context) => ActorFoto(),
+        'peliculaFoto': (BuildContext context) => PeliculaFoto(),
+        'serieFoto': (BuildContext context) => SerieFoto(),
       },
     );
   }

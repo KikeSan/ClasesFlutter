@@ -104,10 +104,19 @@ class PeliculaDetalle extends StatelessWidget {
             tag: pelicula.uniqueId,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Image(
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(context, 'peliculaFoto',
+                    arguments: pelicula),
+                child: FadeInImage(
+                  image: NetworkImage(pelicula.getPosterImg()),
+                  placeholder: AssetImage('assets/img/no-image.jpg'),
+                  height: 150.0,
+                ),
+              ),
+              /* child: Image(
                 image: NetworkImage(pelicula.getPosterImg()),
                 height: 150.0,
-              ),
+              ), */
             ),
           ),
           SizedBox(

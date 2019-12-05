@@ -104,9 +104,14 @@ class SerieDetalle extends StatelessWidget {
             tag: pelicula.uniqueId,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Image(
-                image: NetworkImage(pelicula.getPosterImg()),
-                height: 150.0,
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(context, 'serieFoto',
+                    arguments: pelicula),
+                child: FadeInImage(
+                  image: NetworkImage(pelicula.getPosterImg()),
+                  placeholder: AssetImage('assets/img/no-image.jpg'),
+                  height: 150.0,
+                ),
               ),
             ),
           ),
