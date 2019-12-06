@@ -13,6 +13,14 @@ class _SettingsPageState extends State<SettingsPage> {
   int _genero = 1;
   String _nombre = 'Pedro';
 
+  TextEditingController _textController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = new TextEditingController(text: _nombre);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,18 +50,27 @@ class _SettingsPageState extends State<SettingsPage> {
             RadioListTile(
               value: 1,
               title: Text('Masculino'),
-              groupValue: 1,
-              onChanged: (value) {},
+              groupValue: _genero,
+              onChanged: (value) {
+                setState(() {
+                  _genero = value;
+                });
+              },
             ),
             RadioListTile(
-              value: 1,
+              value: 2,
               title: Text('Femenino'),
-              groupValue: 2,
-              onChanged: (value) {},
+              groupValue: _genero,
+              onChanged: (value) {
+                setState(() {
+                  _genero = value;
+                });
+              },
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: TextField(
+                controller: _textController,
                 decoration: InputDecoration(
                     labelText: 'Nombre',
                     helperText: 'Nombre de la persona usando el telefono'),
