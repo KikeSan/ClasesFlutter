@@ -25,6 +25,7 @@ dependencies:
   rxdart: ^0.22.6
   http:
   image_picker:
+  mime_type:
 
 dev_dependencies:
   flutter_test:
