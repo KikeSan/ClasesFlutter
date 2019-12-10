@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:formvalidation/src/bloc/provider.dart';
 import 'package:formvalidation/src/providers/usuario_provider.dart';
+import 'package:formvalidation/src/utils/utils.dart';
 
 class LoginPage extends StatelessWidget {
   final usuarioProvider = new UsuarioProvider();
@@ -131,11 +132,15 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  _login(LoginBloc bloc, BuildContext context) {
-    usuarioProvider.login(bloc.email, bloc.password);
+  _login(LoginBloc bloc, BuildContext context) async {
+    Map info = await usuarioProvider.login(bloc.email, bloc.password);
+    if (info['ok']) {
+      Navigator.pushReplacementNamed(context, 'home');
+    } else {
+      mostrarAlerta(context, info['mensaje']);
+    }
     //PUSHNAMED hace que aparezca un boton de volver arriba a la izquierda
     //PUSHREPLACEMENTNAMED hace q la nueva pagina sea mi nuevo root
-    //Navigator.pushReplacementNamed(context, 'home');
   }
 
   Widget _crearFondo(BuildContext context) {
