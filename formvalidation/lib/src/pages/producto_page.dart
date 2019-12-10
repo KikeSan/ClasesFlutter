@@ -119,7 +119,7 @@ class _ProductoPageState extends State<ProductoPage> {
     );
   }
 
-  void _submit() {
+  void _submit() async {
     //Si el formulario no es valido se queda en esta linea y no continua con el resto de codigo
     if (!formKey.currentState.validate()) return;
     //Esta instrucción va a disparar todos los save q tiene el formulario pejm: onSaved: (value) => producto.titulo = value,
@@ -128,6 +128,10 @@ class _ProductoPageState extends State<ProductoPage> {
     setState(() {
       _guardando = true;
     });
+
+    if (foto != null) {
+      producto.fotoUrl = await productoProvider.subirImagen(foto);
+    }
 
     if (producto.id == null) {
       productoProvider.crearProducto(producto);
