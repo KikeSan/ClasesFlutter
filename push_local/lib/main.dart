@@ -7,10 +7,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Push Local',
+      title: 'Push Notifications',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Material App Bar'),
+          title: Text('Push notifications'),
         ),
         body: Center(
           child: Container(

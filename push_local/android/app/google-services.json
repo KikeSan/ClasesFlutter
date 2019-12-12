@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:60276735320:android:3930abde23849e02e9792d",
+        "mobilesdk_app_id": "1:60276735320:android:c9a167aa0b817ebfe9792d",
         "android_client_info": {
           "package_name": "com.example.pushlocal"
         }
