@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/actores_model.dart';
 import 'package:peliculas/src/models/pelicula_model.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class PeliculaDetalle extends StatelessWidget {
   @override
@@ -23,6 +24,7 @@ class PeliculaDetalle extends StatelessWidget {
                 SizedBox(height: 10.0),
                 _posterTitulo(context, pelicula),
                 _descripcion(pelicula),
+                _buildVideo(context, pelicula),
                 _crearCasting(context, pelicula)
               ]),
             )
@@ -30,6 +32,26 @@ class PeliculaDetalle extends StatelessWidget {
         )
       ],
     ));
+  }
+
+  Widget _buildVideo(BuildContext context, Pelicula pelicula) {
+    final YoutubePlayerController _controller = YoutubePlayerController(
+      initialVideoId: pelicula.id.toString(),
+      flags: YoutubePlayerFlags(
+        autoPlay: true,
+        mute: true,
+      ),
+    );
+    print('ID video--------> ' + pelicula.id.toString());
+    return YoutubePlayer(
+      controller: _controller,
+      showVideoProgressIndicator: true,
+      progressIndicatorColor: Colors.amber,
+      progressColors: ProgressBarColors(
+        playedColor: Colors.amber,
+        handleColor: Colors.amberAccent,
+      ),
+    );
   }
 
   Widget _fondoApp() {
