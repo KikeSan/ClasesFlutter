@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/actores_model.dart';
 import 'package:peliculas/src/models/pelicula_model.dart';
+import 'package:peliculas/src/models/video_model.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -10,8 +11,8 @@ class PeliculaDetalle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Pelicula pelicula = ModalRoute.of(context).settings.arguments;
-    print('peliculaDetalle');
-    print(pelicula.title);
+    //print('peliculaDetalle');
+    //print(pelicula.title);
     return Scaffold(
         body: Stack(
       children: [
@@ -24,7 +25,7 @@ class PeliculaDetalle extends StatelessWidget {
                 SizedBox(height: 10.0),
                 _posterTitulo(context, pelicula),
                 _descripcion(pelicula),
-                _buildVideo(context, pelicula),
+                //_buildVideo(context, pelicula),
                 _crearCasting(context, pelicula)
               ]),
             )
@@ -35,7 +36,7 @@ class PeliculaDetalle extends StatelessWidget {
   }
 
   Widget _buildVideo(BuildContext context, Pelicula pelicula) {
-    final YoutubePlayerController _controller = YoutubePlayerController(
+    /* final YoutubePlayerController _controller = YoutubePlayerController(
       initialVideoId: pelicula.id.toString(),
       flags: YoutubePlayerFlags(
         autoPlay: true,
@@ -51,7 +52,42 @@ class PeliculaDetalle extends StatelessWidget {
         playedColor: Colors.amber,
         handleColor: Colors.amberAccent,
       ),
+    ); */
+    final peliProvider = new PeliculasProvider();
+    return FutureBuilder(
+      future: peliProvider.getVideoId(pelicula.id.toString()),
+      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+        if (snapshot.hasData) {
+          return _pintarVideo(context, snapshot.data);
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
+  }
+
+  Widget _pintarVideo(BuildContext context, List<Video> video) {
+    print('ID video--------> ' + video[0].id);
+    if (video[0].site == 'YouTube') {
+      final YoutubePlayerController _controller = YoutubePlayerController(
+        initialVideoId: video[0].id.toString(),
+        flags: YoutubePlayerFlags(
+          autoPlay: true,
+          mute: true,
+        ),
+      );
+      return YoutubePlayer(
+        controller: _controller,
+        showVideoProgressIndicator: true,
+        progressIndicatorColor: Colors.amber,
+        progressColors: ProgressBarColors(
+          playedColor: Colors.amber,
+          handleColor: Colors.amberAccent,
+        ),
+      );
+    }
   }
 
   Widget _fondoApp() {

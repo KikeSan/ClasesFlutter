@@ -9,6 +9,7 @@ import 'package:peliculas/src/models/fotosActor_model.dart';
 import 'package:peliculas/src/models/pelicula_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:peliculas/src/models/serie_model.dart';
+import 'package:peliculas/src/models/video_model.dart';
 
 class PeliculasProvider {
   String _apikey = '7ee4ac5a82ffbe62669798a4c5e6ff46';
@@ -147,6 +148,17 @@ class PeliculasProvider {
     final decodedData = json.decode(resp.body);
     final fotosPerfil = new FotosActor.fromJsonList(decodedData['profiles']);
     return fotosPerfil.fotos;
+  }
+
+  Future<List<Video>> getVideoId(String videoId) async {
+    final url = Uri.https(_url, '3/movie/$videoId/videos',
+        {'api_key': _apikey, 'language': 'es-ES'});
+
+    final resp = await http.get(url);
+    final decodedData = json.decode(resp.body);
+    final videos = new Videos.fromJsonList(decodedData['results']);
+
+    return videos.items;
   }
 
   Future<List<Pelicula>> buscarPelicula(String query) async {
