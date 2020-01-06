@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
         children: <Widget>[
           _fondoApp(),
           Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[_header(), _calculador()],
@@ -73,13 +74,20 @@ class MyApp extends StatelessWidget {
   Widget _calculador() {
     return Column(
       children: <Widget>[
-        TextField(
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            hintText: 'Monto',
-            labelText: 'Ingrese Monto',
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
+          child: TextField(
+            keyboardType: TextInputType.number,
+            style: TextStyle(fontSize: 20.0),
+            decoration: InputDecoration(
+                hintText: 'Monto',
+                labelText: 'Ingrese Monto',
+                filled: true,
+                border: InputBorder.none,
+                prefixIcon: Icon(Icons.attach_money),
+                fillColor: Color.fromRGBO(255, 255, 255, 1.0)),
+            onChanged: _calcular,
           ),
-          onChanged: _calcular,
         ),
         Table(
           //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -95,6 +103,21 @@ class MyApp extends StatelessWidget {
               _crearBoton('10%'),
             ])
           ],
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
+          child: TextField(
+            keyboardType: TextInputType.number,
+            style: TextStyle(fontSize: 20.0),
+            decoration: InputDecoration(
+                hintText: '%',
+                labelText: '',
+                filled: true,
+                border: InputBorder.none,
+                prefixIcon: Icon(Icons.trending_down),
+                fillColor: Color.fromRGBO(255, 255, 255, 1.0)),
+            onChanged: _calcular,
+          ),
         ),
       ],
     );
