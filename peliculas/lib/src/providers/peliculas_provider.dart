@@ -152,13 +152,32 @@ class PeliculasProvider {
 
   Future<List<Video>> getVideoId(String videoId) async {
     final url = Uri.https(_url, '3/movie/$videoId/videos',
-        {'api_key': _apikey, 'language': 'es-ES'});
+        {'api_key': _apikey, 'language': 'en-EN'});
 
     final resp = await http.get(url);
     final decodedData = json.decode(resp.body);
     final videos = new Videos.fromJsonList(decodedData['results']);
+    print('Cantidad de videos: ' + videos.items.length.toString());
+    if (videos.items.length > 0) {
+      return videos.items;
+    } else {
+      return null;
+    }
+  }
 
-    return videos.items;
+  Future<List<Video>> getVideoSerieId(String videoId) async {
+    final url = Uri.https(_url, '3/tv/$videoId/videos',
+        {'api_key': _apikey, 'language': 'en-EN'});
+
+    final resp = await http.get(url);
+    final decodedData = json.decode(resp.body);
+    final videos = new Videos.fromJsonList(decodedData['results']);
+    print('Cantidad de videos: ' + videos.items.length.toString());
+    if (videos.items.length > 0) {
+      return videos.items;
+    } else {
+      return null;
+    }
   }
 
   Future<List<Pelicula>> buscarPelicula(String query) async {

@@ -12,7 +12,8 @@ class PeliculaDetalle extends StatelessWidget {
   Widget build(BuildContext context) {
     final Pelicula pelicula = ModalRoute.of(context).settings.arguments;
     //print('peliculaDetalle');
-    //print(pelicula.title);
+    print('Detalle de pelicula === ' + pelicula.title);
+    print('ID de pelicula === ' + pelicula.id.toString());
     return Scaffold(
         body: Stack(
       children: [
@@ -25,7 +26,8 @@ class PeliculaDetalle extends StatelessWidget {
                 SizedBox(height: 10.0),
                 _posterTitulo(context, pelicula),
                 _descripcion(pelicula),
-                //_buildVideo(context, pelicula),
+                _buildVideo(context, pelicula),
+                SizedBox(height: 40.0),
                 _crearCasting(context, pelicula)
               ]),
             )
@@ -36,23 +38,6 @@ class PeliculaDetalle extends StatelessWidget {
   }
 
   Widget _buildVideo(BuildContext context, Pelicula pelicula) {
-    /* final YoutubePlayerController _controller = YoutubePlayerController(
-      initialVideoId: pelicula.id.toString(),
-      flags: YoutubePlayerFlags(
-        autoPlay: true,
-        mute: true,
-      ),
-    );
-    print('ID video--------> ' + pelicula.id.toString());
-    return YoutubePlayer(
-      controller: _controller,
-      showVideoProgressIndicator: true,
-      progressIndicatorColor: Colors.amber,
-      progressColors: ProgressBarColors(
-        playedColor: Colors.amber,
-        handleColor: Colors.amberAccent,
-      ),
-    ); */
     final peliProvider = new PeliculasProvider();
     return FutureBuilder(
       future: peliProvider.getVideoId(pelicula.id.toString()),
@@ -60,9 +45,14 @@ class PeliculaDetalle extends StatelessWidget {
         if (snapshot.hasData) {
           return _pintarVideo(context, snapshot.data);
         } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          print('LOADER--------> ' + snapshot.data.toString());
+          if (snapshot.data != null) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Text('');
+          }
         }
       },
     );
@@ -72,10 +62,10 @@ class PeliculaDetalle extends StatelessWidget {
     print('ID video--------> ' + video[0].id);
     if (video[0].site == 'YouTube') {
       final YoutubePlayerController _controller = YoutubePlayerController(
-        initialVideoId: video[0].id.toString(),
+        initialVideoId: video[0].key,
         flags: YoutubePlayerFlags(
-          autoPlay: true,
-          mute: true,
+          autoPlay: false,
+          mute: false,
         ),
       );
       return YoutubePlayer(
