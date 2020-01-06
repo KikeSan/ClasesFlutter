@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/actores_model.dart';
 import 'package:peliculas/src/models/serie_model.dart';
+import 'package:peliculas/src/models/video_model.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class SerieDetalle extends StatelessWidget {
   @override
@@ -11,6 +13,7 @@ class SerieDetalle extends StatelessWidget {
     final Serie serie = ModalRoute.of(context).settings.arguments;
     print('peliculaDetalle');
     print(serie.name);
+    print('ID de serie === ' + serie.id.toString());
     return Scaffold(
         body: Stack(
       children: [
@@ -23,6 +26,8 @@ class SerieDetalle extends StatelessWidget {
                 SizedBox(height: 10.0),
                 _posterTitulo(context, serie),
                 _descripcion(serie),
+                _buildVideo(context, serie),
+                SizedBox(height: 40.0),
                 _crearCasting(context, serie)
               ]),
             )
@@ -30,6 +35,49 @@ class SerieDetalle extends StatelessWidget {
         )
       ],
     ));
+  }
+
+  Widget _buildVideo(BuildContext context, Serie pelicula) {
+    final peliProvider = new PeliculasProvider();
+    return FutureBuilder(
+      future: peliProvider.getVideoSerieId(pelicula.id.toString()),
+      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+        if (snapshot.hasData) {
+          return _pintarVideo(context, snapshot.data);
+        } else {
+          print('LOADER--------> ' + snapshot.data.toString());
+          if (snapshot.data != null) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Text('');
+          }
+        }
+      },
+    );
+  }
+
+  Widget _pintarVideo(BuildContext context, List<Video> video) {
+    print('ID video--------> ' + video[0].id);
+    if (video[0].site == 'YouTube') {
+      final YoutubePlayerController _controller = YoutubePlayerController(
+        initialVideoId: video[0].key,
+        flags: YoutubePlayerFlags(
+          autoPlay: false,
+          mute: false,
+        ),
+      );
+      return YoutubePlayer(
+        controller: _controller,
+        showVideoProgressIndicator: true,
+        progressIndicatorColor: Colors.amber,
+        progressColors: ProgressBarColors(
+          playedColor: Colors.amber,
+          handleColor: Colors.amberAccent,
+        ),
+      );
+    }
   }
 
   Widget _fondoApp() {
