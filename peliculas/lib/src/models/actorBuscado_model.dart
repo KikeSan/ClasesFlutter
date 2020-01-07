@@ -49,7 +49,7 @@ class ActorBuscado extends Actor {
 
   getFoto() {
     if (profilePath == null) {
-      return 'https://dakotamoda.es/wp-content/themes/gecko/assets/images/placeholder.png';
+      return 'https://res.cloudinary.com/kikesan/image/upload/v1578437124/peliculasApp/uywisicoxtk8ruovc8qp.png';
     } else {
       return 'https://image.tmdb.org/t/p/w500/$profilePath';
     }

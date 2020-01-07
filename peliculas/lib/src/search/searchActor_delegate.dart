@@ -81,7 +81,7 @@ class DataSearchActor extends SearchDelegate {
                   fit: BoxFit.contain,
                 ),
                 title: Text(serie.name),
-                subtitle: Text(serie.knownForDepartment),
+                subtitle: Text('Rate: ' + serie.popularity.toString()),
                 onTap: () {
                   //close(context, null);
                   serie.uniqueId = '';
