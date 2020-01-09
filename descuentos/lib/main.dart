@@ -16,6 +16,7 @@ class _MyAppState extends State<MyApp> {
   double primerDescuento = 0;
   String stringDescuentoUno = '';
   String stringDescuentoDos = '';
+  String titleDescuentos = '';
 
   final montoPrincipal = TextEditingController();
   final dsctoEspecial = TextEditingController();
@@ -241,7 +242,7 @@ class _MyAppState extends State<MyApp> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text('Dsctos aplicados',
+                  Text(titleDescuentos,
                       style: TextStyle(
                         color: Color.fromRGBO(160, 242, 119, 1.0),
                       )),
@@ -345,33 +346,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Widget _crearInputAdicional() {
-    return Container(
-      width: 70.0,
-      height: 60.0,
-      margin: EdgeInsets.all(10.0),
-      child: TextField(
-        controller: dsctoAdicional,
-        keyboardType: TextInputType.number,
-        style: TextStyle(fontSize: 20.0),
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-            border: new OutlineInputBorder(
-              borderRadius: const BorderRadius.all(
-                const Radius.circular(7.0),
-              ),
-            ),
-            hintText: '__%',
-            //labelText: 'Dscto',
-            filled: true,
-            //border: InputBorder.none,
-            //prefixIcon: Icon(Icons.attach_money),
-            fillColor: Color.fromRGBO(255, 255, 255, 1.0)),
-        onChanged: (valor) => _calcularAdicional(double.parse(valor)),
-      ),
-    );
-  }
-
   _actualizaValor(double valor) {
     print('Valor: ' + valor.toString());
     valorInput = valor;
@@ -385,6 +359,8 @@ class _MyAppState extends State<MyApp> {
     print('Porcentaje: ' + percent.toString());
     primerDescuento = percent;
     stringDescuentoUno = percent.toStringAsFixed(0) + '%';
+    titleDescuentos = 'Dsctos aplicados:';
+    stringDescuentoDos = '';
     setState(() {
       total = valorInput - (valorInput * (percent / 100));
     });
@@ -407,6 +383,7 @@ class _MyAppState extends State<MyApp> {
       stringDescuentoDos = '';
       montoPrincipal.text = '';
       dsctoEspecial.text = '';
+      titleDescuentos = '';
     });
   }
 }
