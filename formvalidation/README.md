@@ -9,4 +9,6 @@ Este es un proyecto de flutter.
 - Este _texto_ esta en cursiva
 - Este **texto** esta en negrita
 
-* [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+> Las citas en bloque deben comenzar y terminar con una línea en blanco
+
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
