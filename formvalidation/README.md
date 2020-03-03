@@ -11,6 +11,10 @@ Este es un proyecto de flutter.
 
 > Las citas en bloque deben comenzar y terminar con una línea en blanco
 
-Este es un ejemplo de "código en línea".
+Este es un ejemplo de ''código en línea''.
+
+```
+Este es un ejemplo de bloque de código
+```
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
