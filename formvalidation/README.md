@@ -1,6 +1,6 @@
 # Formvalidation
 
-Formulario.
+App de practica con un Formulario.
 
 ## Notas
 
