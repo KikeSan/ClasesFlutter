@@ -17,4 +17,10 @@ Este es un ejemplo de ''código en línea''.
 Este es un ejemplo de bloque de código
 ```
 
+---
+
+Vínculos a tickets
+
+Esto lo tratamos en el ticket n.º 61.
+
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
