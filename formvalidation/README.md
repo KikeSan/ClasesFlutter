@@ -46,5 +46,9 @@ En dicha [web][blog] recopilo artículos sobre todo lo relacionado con automatiz
 
 [blog]: http://limni.net/blog/
 
+## Código
+
+`Esta es una linea de código`
+
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
