@@ -8,6 +8,7 @@ Este es un proyecto de flutter.
 
 - Este _texto_ esta en cursiva
 - Este **texto** esta en negrita
+- Este ***texto*** esta en negrita y cursiva
 
 > Las citas en bloque deben comenzar y terminar con una línea en blanco
 
