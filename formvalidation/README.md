@@ -19,7 +19,7 @@ Este es un ejemplo de bloque de código
 
 ---
 
-Vínculos a tickets
+## Vínculos a tickets
 
 Esto lo tratamos en el ticket n.º 61.
 
