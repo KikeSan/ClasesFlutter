@@ -26,10 +26,10 @@ Esto lo tratamos en el ticket n.º 61.
 ## Listas anidadas:
 
 - Primer elemento
-  - Primer Subelemento del primer elemento
-	- Segundo subelemento del primer elemento
+    - Primer Subelemento del primer elemento
+	  - Segundo subelemento del primer elemento
 - segundo elemento
-  - Primer Subelemento del segundo elemento
-	- Segundo subelemento del segundo elemento
+    - Primer Subelemento del segundo elemento
+	  - Segundo subelemento del segundo elemento
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
