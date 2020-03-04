@@ -48,7 +48,7 @@ En dicha [web][blog] recopilo artículos sobre todo lo relacionado con automatiz
 
 ## Código
 
-`Esta es una linea de código`
+Un ejemplo en una sola linea `Esta es una linea de código`
 
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
