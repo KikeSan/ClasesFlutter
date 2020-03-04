@@ -38,5 +38,13 @@ Esto lo tratamos en el ticket n.º 61.
 - Se colocan entre [] el texto y entre () el link [Ejemplo](https://www.google.com)
 
 
+## Links o enlaces como referencia
+
+Me llamo Javier Cristóbal y tengo un blog sobre [productividad mac][blog].
+
+En dicha [web][blog] recopilo artículos sobre todo lo relacionado con automatización, gestión y eficiencia.
+
+[blog]: http://limni.net/blog/
+
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
