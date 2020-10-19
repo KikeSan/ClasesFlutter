@@ -21,8 +21,8 @@ class FotosSwiper extends StatelessWidget {
           return ClipRRect(
               borderRadius: BorderRadius.circular(14.0),
               child: GestureDetector(
-                onTap: () => Navigator.pushNamed(context, 'detalle',
-                    arguments: fotos[index]),
+                /* onTap: () => Navigator.pushNamed(context, 'detalle',
+                    arguments: fotos[index]), */
                 child: FadeInImage(
                   image: NetworkImage(fotos[index].getFoto()),
                   placeholder: AssetImage('assets/img/no-image.jpg'),

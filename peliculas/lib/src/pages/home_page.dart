@@ -2,6 +2,8 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
+import 'package:peliculas/src/search/searchActor_delegate.dart';
+import 'package:peliculas/src/search/searchTv_delegate.dart';
 import 'package:peliculas/src/search/search_delegate.dart';
 import 'package:peliculas/src/widgets/card_swiper_widget.dart';
 import 'package:peliculas/src/widgets/movie_horizontal.dart';
@@ -50,17 +52,33 @@ class HomePage extends StatelessWidget {
           height: 60.0,
         ),
         Text(
-          'Películas en cines',
+          'Búsquedas',
           style: TextStyle(
-              fontSize: 28.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.purple[100]),
+              fontSize: 24.0,
+              //fontWeight: FontWeight.bold,
+              color: Colors.blue[50]),
         ),
-        SizedBox(width: 60.0),
+        SizedBox(width: 40.0),
         IconButton(
-          icon: Icon(Icons.search),
-          color: Colors.purpleAccent,
-          iconSize: 30.0,
+          icon: Icon(Icons.person),
+          color: Colors.blue[100],
+          iconSize: 35.0,
+          onPressed: () {
+            showSearch(context: context, delegate: DataSearchActor());
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.live_tv),
+          color: Colors.blue[100],
+          iconSize: 32.0,
+          onPressed: () {
+            showSearch(context: context, delegate: DataSearchTV());
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.movie_filter),
+          color: Colors.blue[100],
+          iconSize: 35.0,
           onPressed: () {
             showSearch(context: context, delegate: DataSearch());
           },
@@ -78,8 +96,8 @@ class HomePage extends StatelessWidget {
               begin: FractionalOffset(0.0, 0.2),
               end: FractionalOffset(0.0, 1.0),
               colors: [
-            Color.fromRGBO(40, 16, 66, 1.0),
-            Color.fromRGBO(19, 0, 29, 1.0)
+            Color.fromRGBO(39, 82, 205, 1.0),
+            Color.fromRGBO(11, 13, 73, 1.0)
           ])),
     );
 
@@ -91,8 +109,8 @@ class HomePage extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(80.0),
             gradient: LinearGradient(colors: [
-              Color.fromRGBO(236, 98, 188, 0.2),
-              Color.fromRGBO(241, 142, 172, 0.2),
+              Color.fromRGBO(90, 120, 160, 0.7),
+              Color.fromRGBO(49, 175, 255, 0.7),
             ])),
       ),
     );
@@ -101,7 +119,7 @@ class HomePage extends StatelessWidget {
       children: <Widget>[
         gradiente,
         Positioned(
-          top: -60.0,
+          top: -85.0,
           left: -140.0,
           child: cajaRosa,
         ),
@@ -134,7 +152,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 20.0, bottom: 5.0),
             child: Text(
               'Populares',
-              style: TextStyle(color: Colors.purpleAccent, fontSize: 26.0),
+              style: TextStyle(color: Colors.blue[200], fontSize: 26.0),
             ),
           ),
           SizedBox(

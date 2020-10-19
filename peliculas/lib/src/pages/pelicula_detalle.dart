@@ -3,14 +3,17 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/actores_model.dart';
 import 'package:peliculas/src/models/pelicula_model.dart';
+import 'package:peliculas/src/models/video_model.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class PeliculaDetalle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Pelicula pelicula = ModalRoute.of(context).settings.arguments;
-    print('peliculaDetalle');
-    print(pelicula.title);
+    //print('peliculaDetalle');
+    print('Detalle de pelicula === ' + pelicula.title);
+    print('ID de pelicula === ' + pelicula.id.toString());
     return Scaffold(
         body: Stack(
       children: [
@@ -23,6 +26,8 @@ class PeliculaDetalle extends StatelessWidget {
                 SizedBox(height: 10.0),
                 _posterTitulo(context, pelicula),
                 _descripcion(pelicula),
+                _buildVideo(context, pelicula),
+                SizedBox(height: 40.0),
                 _crearCasting(context, pelicula)
               ]),
             )
@@ -30,6 +35,49 @@ class PeliculaDetalle extends StatelessWidget {
         )
       ],
     ));
+  }
+
+  Widget _buildVideo(BuildContext context, Pelicula pelicula) {
+    final peliProvider = new PeliculasProvider();
+    return FutureBuilder(
+      future: peliProvider.getVideoId(pelicula.id.toString()),
+      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+        if (snapshot.hasData) {
+          return _pintarVideo(context, snapshot.data);
+        } else {
+          print('LOADER--------> ' + snapshot.data.toString());
+          if (snapshot.data != null) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Text('');
+          }
+        }
+      },
+    );
+  }
+
+  Widget _pintarVideo(BuildContext context, List<Video> video) {
+    print('ID video--------> ' + video[0].id);
+    if (video[0].site == 'YouTube') {
+      final YoutubePlayerController _controller = YoutubePlayerController(
+        initialVideoId: video[0].key,
+        flags: YoutubePlayerFlags(
+          autoPlay: false,
+          mute: false,
+        ),
+      );
+      return YoutubePlayer(
+        controller: _controller,
+        showVideoProgressIndicator: true,
+        progressIndicatorColor: Colors.amber,
+        progressColors: ProgressBarColors(
+          playedColor: Colors.amber,
+          handleColor: Colors.amberAccent,
+        ),
+      );
+    }
   }
 
   Widget _fondoApp() {
@@ -41,8 +89,8 @@ class PeliculaDetalle extends StatelessWidget {
               begin: FractionalOffset(0.0, 0.2),
               end: FractionalOffset(0.0, 1.0),
               colors: [
-            Color.fromRGBO(40, 16, 66, 1.0),
-            Color.fromRGBO(19, 0, 29, 1.0)
+            Color.fromRGBO(39, 82, 205, 1.0),
+            Color.fromRGBO(11, 13, 73, 1.0)
           ])),
     );
 
@@ -54,8 +102,8 @@ class PeliculaDetalle extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(80.0),
             gradient: LinearGradient(colors: [
-              Color.fromRGBO(236, 98, 188, 0.1),
-              Color.fromRGBO(241, 142, 172, 0.15),
+              Color.fromRGBO(90, 120, 160, 0.2),
+              Color.fromRGBO(49, 175, 255, 0.5),
             ])),
       ),
     );
@@ -65,7 +113,7 @@ class PeliculaDetalle extends StatelessWidget {
         gradiente,
         Positioned(
           top: 80.0,
-          right: -130.0,
+          right: -135.0,
           child: cajaRosa,
         ),
       ],
@@ -104,10 +152,19 @@ class PeliculaDetalle extends StatelessWidget {
             tag: pelicula.uniqueId,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Image(
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(context, 'peliculaFoto',
+                    arguments: pelicula),
+                child: FadeInImage(
+                  image: NetworkImage(pelicula.getPosterImg()),
+                  placeholder: AssetImage('assets/img/no-image.jpg'),
+                  height: 150.0,
+                ),
+              ),
+              /* child: Image(
                 image: NetworkImage(pelicula.getPosterImg()),
                 height: 150.0,
-              ),
+              ), */
             ),
           ),
           SizedBox(
@@ -119,12 +176,12 @@ class PeliculaDetalle extends StatelessWidget {
               children: <Widget>[
                 Text(
                   pelicula.title,
-                  style: TextStyle(color: Colors.purple[100], fontSize: 20.0),
+                  style: TextStyle(color: Colors.blue[50], fontSize: 20.0),
                   //overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   pelicula.originalTitle,
-                  style: TextStyle(color: Colors.purple[300], fontSize: 16.0),
+                  style: TextStyle(color: Colors.blue[300], fontSize: 16.0),
                   //overflow: TextOverflow.ellipsis,
                 ),
                 Row(
@@ -132,14 +189,14 @@ class PeliculaDetalle extends StatelessWidget {
                     Icon(
                       Icons.star_border,
                       size: 18.0,
-                      color: Colors.lime,
+                      color: Colors.yellow,
                     ),
                     SizedBox(
                       width: 5.0,
                     ),
                     Text(pelicula.voteAverage.toString(),
-                        style: TextStyle(
-                            color: Colors.purple[200], fontSize: 16.0)),
+                        style:
+                            TextStyle(color: Colors.blue[200], fontSize: 16.0)),
                   ],
                 ),
                 Row(
@@ -147,14 +204,14 @@ class PeliculaDetalle extends StatelessWidget {
                     Icon(
                       Icons.movie_filter,
                       size: 18.0,
-                      color: Colors.lime,
+                      color: Colors.yellow,
                     ),
                     SizedBox(
                       width: 5.0,
                     ),
                     Text(pelicula.releaseDate,
-                        style: TextStyle(
-                            fontSize: 14.0, color: Colors.purple[200])),
+                        style:
+                            TextStyle(fontSize: 14.0, color: Colors.blue[200])),
                   ],
                 ),
                 /* SizedBox(height: 5.0),
@@ -175,7 +232,7 @@ class PeliculaDetalle extends StatelessWidget {
       child: Text(
         pelicula.overview,
         textAlign: TextAlign.justify,
-        style: TextStyle(color: Colors.purple[100]),
+        style: TextStyle(color: Colors.blue[50]),
       ),
     );
   }
@@ -231,7 +288,7 @@ class PeliculaDetalle extends StatelessWidget {
             actor.name,
             //overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13.0, color: Colors.purple[100]),
+            style: TextStyle(fontSize: 13.0, color: Colors.blue[50]),
           ),
           SizedBox(
             height: 2.0,
@@ -239,7 +296,7 @@ class PeliculaDetalle extends StatelessWidget {
           Text(
             actor.character,
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.purple[800], fontSize: 12.0),
+            style: TextStyle(color: Colors.blue[100], fontSize: 12.0),
           )
         ],
       ),

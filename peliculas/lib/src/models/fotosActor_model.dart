@@ -43,7 +43,7 @@ class Fotos {
 
   getFoto() {
     if (filePath == null) {
-      return 'https://dakotamoda.es/wp-content/themes/gecko/assets/images/placeholder.png';
+      return 'https://res.cloudinary.com/kikesan/image/upload/v1578437124/peliculasApp/uywisicoxtk8ruovc8qp.png';
     } else {
       return 'https://image.tmdb.org/t/p/w500/$filePath';
     }
