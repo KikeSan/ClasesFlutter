@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/src/services/news_service.dart';
 import 'package:provider/provider.dart';
 
 class TabsPage extends StatelessWidget {
@@ -32,6 +33,9 @@ class _Navegacion extends StatelessWidget {
         ]);
   }
 }
+
+// API key: edac150847ce4a839f2fa74f76ab1892
+// endpoint: https://newsapi.org/v2/top-headlines?country=us&apiKey=edac150847ce4a839f2fa74f76ab1892
 
 class _Paginas extends StatelessWidget {
   @override
