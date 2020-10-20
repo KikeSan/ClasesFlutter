@@ -36,7 +36,9 @@ class _Navegacion extends StatelessWidget {
 class _Paginas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final navegacionModel = Provider.of<_NavegacionModel>(context);
     return PageView(
+      controller: navegacionModel.pageController,
       //physics: BouncingScrollPhysics(), //Esto es para no mostrar una curva al borde cuando ya no hay más tabs
       physics:
           NeverScrollableScrollPhysics(), //Esto es para no navegar entre tabs como slide
@@ -55,11 +57,16 @@ class _Paginas extends StatelessWidget {
 //creamos una clase para notificar a los widgets de un cambio en los tabs
 class _NavegacionModel with ChangeNotifier {
   int _paginaActual = 0;
+  PageController _pageController = new PageController();
 
   int get paginaActual => this._paginaActual;
 
   set paginaActual(int valor) {
     this._paginaActual = valor;
+    _pageController.animateToPage(valor,
+        duration: Duration(milliseconds: 250), curve: Curves.easeOut);
     notifyListeners();
   }
+
+  PageController get pageController => this._pageController;
 }
