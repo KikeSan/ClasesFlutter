@@ -57,6 +57,7 @@ class _Paginas extends StatelessWidget {
 }
 
 //creamos una clase para notificar a los widgets de un cambio en los tabs
+
 class _NavegacionModel with ChangeNotifier {
   int _paginaActual = 0;
   PageController _pageController = new PageController();
