@@ -13,8 +13,6 @@ class _Tab1PageState extends State<Tab1Page>
   @override
   Widget build(BuildContext context) {
     final headlines = Provider.of<NewService>(context).headlines;
-    //newService.headlines
-
     return Scaffold(
         body: headlines.length == 0
             ? Center(child: CircularProgressIndicator())
