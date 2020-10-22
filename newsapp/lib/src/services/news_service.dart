@@ -40,6 +40,9 @@ class NewService with ChangeNotifier {
     notifyListeners();
   }
 
+  List<Article> get getArticleCategorySelected =>
+      this.categoryArticles[this.selectedCategory];
+
   getTopHeadlines() async {
     final url = '$_URL_NEWS/top-headlines?apiKey=$_API_KEY&country=us';
     final resp = await http.get(url);
