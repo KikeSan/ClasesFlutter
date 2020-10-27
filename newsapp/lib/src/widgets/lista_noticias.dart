@@ -83,7 +83,6 @@ class _TarjetaBody extends StatelessWidget {
 
 class _TarjetaImagen extends StatelessWidget {
   final Article noticia;
-
   const _TarjetaImagen(this.noticia);
   @override
   Widget build(BuildContext context) {
