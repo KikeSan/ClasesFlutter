@@ -21,20 +21,43 @@ class _FullScreenMapState extends State<FullScreenMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: crearMapa(),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          FloatingActionButton(
-              child: Icon(Icons.map),
-              onPressed: () {
-                selectedStyle == darkStyle
-                    ? selectedStyle = streetStyle
-                    : selectedStyle = darkStyle;
+      floatingActionButton: botonesFlotantes(),
+    );
+  }
 
-                setState(() {});
-              })
-        ],
-      ),
+  Column botonesFlotantes() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        FloatingActionButton(
+            child: Icon(Icons.zoom_in),
+            onPressed: () {
+              //mapController.animateCamera(CameraUpdate.tiltTo(60));
+              mapController.animateCamera(CameraUpdate.zoomIn());
+            }),
+        SizedBox(
+          height: 5,
+        ),
+        FloatingActionButton(
+            child: Icon(Icons.zoom_out),
+            onPressed: () {
+              //mapController.animateCamera(CameraUpdate.tiltTo(60));
+              mapController.animateCamera(CameraUpdate.zoomOut());
+            }),
+        SizedBox(
+          height: 5,
+        ),
+        //cambiar estilo
+        FloatingActionButton(
+            child: Icon(Icons.map),
+            onPressed: () {
+              selectedStyle == darkStyle
+                  ? selectedStyle = streetStyle
+                  : selectedStyle = darkStyle;
+
+              setState(() {});
+            })
+      ],
     );
   }
 
